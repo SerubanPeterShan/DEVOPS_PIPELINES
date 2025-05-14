@@ -9,8 +9,6 @@ on:
 
 permissions: write-all
 
-
-
 env:
   PROJECT_ID: ${{ secrets.GCP_PROJECT_ID }}
   GAR_LOCATION: us-central1
@@ -54,8 +52,17 @@ jobs:
 
     - name: Debug Authentication
       run: |
+        echo "Checking authentication status..."
         gcloud auth list
         gcloud config get-value project
+        echo "Checking service account permissions..."
+        gcloud projects get-iam-policy ${{ env.PROJECT_ID }} --flatten="bindings[].members" --format='table(bindings.role,bindings.members)' --filter="bindings.members:flask-app-sa@gcp-test-458501.iam.gserviceaccount.com"
+        echo "Checking Artifact Registry access..."
+        gcloud artifacts repositories list --location=${{ env.GAR_LOCATION }}
+
+    - name: Configure Docker authentication
+      run: |
+        gcloud auth configure-docker ${{ env.GAR_LOCATION }}-docker.pkg.dev
 
     - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
