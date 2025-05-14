@@ -10,6 +10,9 @@ RUN apt-get update && apt-get install -y \
 # Install poetry
 RUN curl -sSL https://install.python-poetry.org | python3 -
 
+# Add poetry to PATH
+ENV PATH="/root/.local/bin:$PATH"
+
 # Copy poetry configuration files
 COPY pyproject.toml poetry.lock* ./
 
@@ -17,11 +20,11 @@ COPY pyproject.toml poetry.lock* ./
 RUN poetry config virtualenvs.create false
 
 # Install dependencies
-RUN poetry install --no-dev --no-interaction --no-ansi
+RUN poetry install --only main --no-interaction --no-ansi
 
 # Copy application code
 COPY . .
 
 EXPOSE 5000
 
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"] 
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
