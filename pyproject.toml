@@ -3,9 +3,10 @@ name = "flask-app"
 version = "0.1.0"
 description = "A Flask application with CI/CD pipeline"
 authors = ["Your Name <your.email@example.com>"]
+package-mode = false
 
 [tool.poetry.dependencies]
-python = "^3.8"
+python = "^3.9"
 flask = "^3.0.2"
 gunicorn = "^21.2.0"
 

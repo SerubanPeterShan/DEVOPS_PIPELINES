@@ -39,7 +39,7 @@ jobs:
         poetry --version
 
     - name: Install dependencies
-      run: poetry install
+      run: poetry install --no-root
 
     - name: Set up Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
