@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}Welcome - Flask Application{% endblock %}
+
+{% block content %}
+<div class="hero">
+    <h1>Welcome to Flask Application</h1>
+    <p class="subtitle">A modern web application built with Flask and Poetry</p>
+    <div class="status-card">
+        <h2>Application Status</h2>
+        <div class="status-indicator success">
+            <span class="status-dot"></span>
+            <span class="status-text">Running</span>
+        </div>
+        <p class="status-message">{{ message }}</p>
+    </div>
+</div>
+{% endblock %} 
